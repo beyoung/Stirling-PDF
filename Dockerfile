@@ -6,7 +6,6 @@ COPY scripts /scripts
 COPY pipeline /pipeline
 COPY src/main/resources/static/fonts/*.ttf /usr/share/fonts/opentype/noto/
 #COPY src/main/resources/static/fonts/*.otf /usr/share/fonts/opentype/noto/
-COPY build/libs/*.jar app.jar
 
 ARG VERSION_TAG
 
@@ -59,9 +58,11 @@ openssl-dev \
 # User permissions
     addgroup -S stirlingpdfgroup && adduser -S stirlingpdfuser -G stirlingpdfgroup && \
     chown -R stirlingpdfuser:stirlingpdfgroup $HOME /scripts /usr/share/fonts/opentype/noto /configs /customFiles /pipeline && \
-    chown stirlingpdfuser:stirlingpdfgroup /app.jar && \
     tesseract --list-langs && \
     rm -rf /var/cache/apk/*
+
+COPY build/libs/*.jar app.jar
+RUN chown stirlingpdfuser:stirlingpdfgroup /app.jar
 
 EXPOSE 8080
 
