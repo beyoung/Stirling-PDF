@@ -8,8 +8,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+<<<<<<< HEAD
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+=======
+import java.util.ArrayList;
+>>>>>>> 6fa4c608 (tiny change)
 import java.util.List;
 
 import org.simpleyaml.configuration.comments.CommentType;
@@ -53,6 +57,7 @@ public class ConfigInitializer
                 }
             }
         } else {
+<<<<<<< HEAD
 
             // Define the path to the config settings file
             Path settingsPath = Paths.get("configs", "settings.yml");
@@ -96,14 +101,56 @@ public class ConfigInitializer
                             .comment(settingsTemplateFile.getComment(key))
                             .blankLine();
                     continue;
+=======
+            Path templatePath =
+                    Paths.get(
+                            getClass()
+                                    .getClassLoader()
+                                    .getResource("settings.yml.template")
+                                    .toURI());
+            Path userPath = Paths.get("configs", "settings.yml");
+
+            List<String> templateLines = Files.readAllLines(templatePath);
+            List<String> userLines =
+                    Files.exists(userPath) ? Files.readAllLines(userPath) : new ArrayList<>();
+
+            List<String> resultLines = new ArrayList<>();
+
+            for (String templateLine : templateLines) {
+                // Check if the line is a comment
+                if (templateLine.trim().startsWith("#")) {
+                    String entry = templateLine.trim().substring(1).trim();
+                    if (!entry.isEmpty()) {
+                        // Check if this comment has been uncommented in userLines
+                        String key = entry.split(":")[0].trim();
+                        System.out.println("key=" + key + ", entry=" + entry);
+                        addLine(resultLines, userLines, templateLine, key);
+                    } else {
+                        resultLines.add(templateLine);
+                    }
+                }
+                // Check if the line is a key-value pair
+                else if (templateLine.contains(":")) {
+                    String key = templateLine.split(":")[0].trim();
+                    addLine(resultLines, userLines, templateLine, key);
+                }
+                // Handle empty lines
+                else if (templateLine.trim().length() == 0) {
+                    resultLines.add("");
+>>>>>>> 6fa4c608 (tiny change)
                 }
                 // Copy settings from the template to the settings.yml file
                 changeConfigItemFromCommentToKeyValue(
                         settingsTemplateFile, settingsFile, tempSettingFile, key);
             }
 
+<<<<<<< HEAD
             // Save the settings.yml file
             tempSettingFile.save();
+=======
+            // Write the result to the user settings file
+            Files.write(userPath, resultLines);
+>>>>>>> 6fa4c608 (tiny change)
         }
 
         // Create custom settings file if it doesn't exist
@@ -112,6 +159,7 @@ public class ConfigInitializer
             Files.createFile(customSettingsPath);
         }
     }
+<<<<<<< HEAD
 
     private void changeConfigItemFromCommentToKeyValue(
             final YamlFile settingsTemplateFile,
@@ -136,6 +184,43 @@ public class ConfigInitializer
         } else {
             // Log if the key is not found in both YAML files
             logger.info("Key not found in both YAML files: " + path);
+=======
+
+    // TODO check parent value instead of just indent lines for duplicate keys (like enabled etc)
+    private static void addLine(
+            List<String> resultLines, List<String> userLines, String templateLine, String key) {
+        boolean added = false;
+        int templateIndentationLevel = getIndentationLevel(templateLine);
+        for (String settingsLine : userLines) {
+            if (settingsLine.contains("oauth2") || settingsLine.contains("enabled"))
+                if (settingsLine.trim().startsWith(key + ":")) {
+                    int settingsIndentationLevel = getIndentationLevel(settingsLine);
+                    // Check if it is correct settingsLine and has the same parent as templateLine
+                    if (settingsIndentationLevel == templateIndentationLevel) {
+                        resultLines.add(settingsLine);
+                        added = true;
+                        break;
+                    }
+                }
+        }
+        if (!added) {
+            resultLines.add(templateLine);
+        }
+    }
+
+    private static int getIndentationLevel(String line) {
+        int indentationLevel = 0;
+        String trimmedLine = line.trim();
+        if (trimmedLine.startsWith("#")) {
+            line = trimmedLine.substring(1);
+        }
+        for (char c : line.toCharArray()) {
+            if (c == ' ') {
+                indentationLevel++;
+            } else {
+                break;
+            }
+>>>>>>> 6fa4c608 (tiny change)
         }
     }
 }

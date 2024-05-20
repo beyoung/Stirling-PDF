@@ -120,7 +120,7 @@ eg ``./extraConfigs:/configs`` to ``/opt/stirlingpdf/extraConfigs:/configs``
 ### Docker Run
 
 ```bash
-docker run -d \
+docker run -d --rm \
   -p 8081:8080 \
   -v ${PWD}/trainingData:/usr/share/tessdata \
   -v ${PWD}/extraConfigs:/configs \
