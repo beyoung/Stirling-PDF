@@ -63,7 +63,7 @@ RUN pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPr
     tesseract --list-langs && \
     rm -rf /var/cache/apk/*
 
-COPY build/libs/*.jar app.jar
+COPY build/libs/*.jar /app.jar
 RUN chown stirlingpdfuser:stirlingpdfgroup /app.jar
 
 EXPOSE 8080
