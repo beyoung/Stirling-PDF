@@ -18,11 +18,13 @@ ENV DOCKER_ENABLE_SECURITY=false \
     PGID=1000 \
     UMASK=022
 
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 # JDK for app
-RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /etc/apk/repositories && \
-    echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/community" | tee -a /etc/apk/repositories && \
-    echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" | tee -a /etc/apk/repositories && \
-    apk upgrade --no-cache -a && \
+RUN echo "@testing https://mirrors.aliyun.com/alpine/edge/main" | tee -a /etc/apk/repositories && \
+    echo "@testing https://mirrors.aliyun.com/alpine/edge/community" | tee -a /etc/apk/repositories && \
+    echo "@testing https://mirrors.aliyun.com/alpine/edge/testing" | tee -a /etc/apk/repositories && \
+    apk update && \
     apk add --no-cache \
         ca-certificates \
         tzdata \
@@ -45,9 +47,10 @@ RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/main" | tee -a /et
         py3-opencv \
 # python3/pip
         python3 && \
-    wget https://bootstrap.pypa.io/get-pip.py -qO - | python3 - --break-system-packages --no-cache-dir --upgrade && \
+    wget https://bootstrap.pypa.io/get-pip.py -qO - | python3 - --break-system-packages --no-cache-dir --upgrade
+
 # uno unoconv and HTML
-    pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPrint && \
+RUN pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPrint -i https://mirrors.aliyun.com/pypi/simple && \
     mv /usr/share/tessdata /usr/share/tessdata-original && \
     mkdir -p $HOME /configs /logs /customFiles /pipeline/watchedFolders /pipeline/finishedFolders && \
     fc-cache -f -v && \
