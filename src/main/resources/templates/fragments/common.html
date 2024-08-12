@@ -4,7 +4,8 @@
 
     <!-- Metadata -->
     <meta charset="utf-8">
-    <meta name="description" th:content="${@appName} + (${header} != null and ${header} != '' ? ' - ' + ${header} : '')">
+    <!-- <meta name="description" th:content="${@appName} + (${header} != null and ${header} != '' ? ' - ' + ${header} : '')"> -->
+    <meta name="keywords" content="free, pdf, tools, online, Merge PDF, split PDF, combine PDF, extract PDF, compress PDF, convert PDF, Word to PDF, Excel to PDF, Powerpoint to PDF, PDF to JPG, JPG to PDF ">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,6 +72,26 @@
     <script th:src="@{'/js/cacheFormInputs.js'}"></script>
     <script th:src="@{'/js/tab-container.js'}"></script>
     <script th:src="@{'/js/darkmode.js'}"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XG41XTVP7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2XG41XTVP7');
+    </script>
+
+    <!-- clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "mdb5as00ky");
+    </script>
+
   </th:block>
 
 <th:block th:fragment="game">
@@ -81,19 +102,19 @@
 
            // Find the file input within the form
           var fileInput = $('input[type="file"]');
-          
+
           // Find the closest enclosing form of the file input
           var form = fileInput.closest('form');
-          
+
           // Find the submit button within the form
           var submitButton = form.find('button[type="submit"], input[type="submit"]');
-          
+
           const boredWaitingText = /*[[#{bored}]]*/ 'Bored Waiting?';
           const downloadCompleteText = /*[[#{downloadComplete}]]*/ 'Download Complete';
           window.downloadCompleteText = downloadCompleteText;
           // Create the 'show-game-btn' button
           var gameButton = $('<button type="button" class="btn btn-primary" id="show-game-btn" style="display:none;">' + boredWaitingText + '</button><br><br>');
-          
+
           // Insert the 'show-game-btn' just above the submit button
           submitButton.before(gameButton);
 

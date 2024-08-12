@@ -161,3 +161,6 @@ out/
 .pytest_cache
 .ipynb_checkpoints
 
+
+trainingData
+extraConfigs

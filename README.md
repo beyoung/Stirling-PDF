@@ -121,16 +121,17 @@ eg ``./extraConfigs:/configs`` to ``/opt/stirlingpdf/extraConfigs:/configs``
 ### Docker Run
 
 ```bash
-docker run -d \
-  -p 8080:8080 \
-  -v ./trainingData:/usr/share/tessdata \
-  -v ./extraConfigs:/configs \
-  -v ./logs:/logs \
+docker run -d --rm \
+  -p 8081:8080 \
+  -v ${PWD}/trainingData:/usr/share/tessdata \
+  -v ${PWD}/extraConfigs:/configs \
+  -v ${PWD}/logs:/logs \
+  -v ${PWD}/customFiles:/customFiles \
   -e DOCKER_ENABLE_SECURITY=false \
   -e INSTALL_BOOK_AND_ADVANCED_HTML_OPS=false \
-  -e LANGS=en_GB \
-  --name stirling-pdf \
-  frooodle/s-pdf:latest
+  -e LANGS=en_US \
+  --name stirling-pdf1 \
+  beyouth/s-pdf:20240812
 
   Can also add these for customisation but are not required
 
