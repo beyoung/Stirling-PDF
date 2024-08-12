@@ -1,5 +1,5 @@
 # Main stage
-FROM alpine:3.20.0
+FROM alpine:3.20.2
 
 # Copy necessary files
 COPY scripts /scripts
@@ -26,37 +26,36 @@ RUN echo "@testing https://mirrors.aliyun.com/alpine/edge/main" | tee -a /etc/ap
     echo "@testing https://mirrors.aliyun.com/alpine/edge/testing" | tee -a /etc/apk/repositories && \
     apk update && \
     apk add --no-cache \
-        ca-certificates \
-        tzdata \
-        tini \
-        bash \
-        curl \
-        shadow \
-        su-exec \
-        openssl \
-        openssl-dev \
-        openjdk21-jre \
-# Doc conversion
-        libreoffice \
-# pdftohtml
-        poppler-utils \
-# OCR MY PDF (unpaper for descew and other advanced featues)
-        ocrmypdf \
-        tesseract-ocr-data-eng \
-# CV
-        py3-opencv \
-# python3/pip
-        python3 && \
-    wget https://bootstrap.pypa.io/get-pip.py -qO - | python3 - --break-system-packages --no-cache-dir --upgrade
-
-# uno unoconv and HTML
-RUN pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPrint -i https://mirrors.aliyun.com/pypi/simple && \
+    ca-certificates \
+    tzdata \
+    tini \
+    bash \
+    curl \
+    shadow \
+    su-exec \
+    openssl \
+    openssl-dev \
+    openjdk21-jre \
+    # Doc conversion
+    libreoffice \
+    # pdftohtml
+    poppler-utils \
+    # OCR MY PDF (unpaper for descew and other advanced featues)
+    ocrmypdf \
+    tesseract-ocr-data-eng \
+    # CV
+    py3-opencv \
+    # python3/pip
+    python3 \
+    py3-pip && \
+    # uno unoconv and HTML
+    RUN pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPrint -i https://mirrors.aliyun.com/pypi/simple && \
     mv /usr/share/tessdata /usr/share/tessdata-original && \
     mkdir -p $HOME /configs /logs /customFiles /pipeline/watchedFolders /pipeline/finishedFolders && \
     fc-cache -f -v && \
     chmod +x /scripts/* && \
     chmod +x /scripts/init.sh && \
-# User permissions
+    # User permissions
     addgroup -S stirlingpdfgroup && adduser -S stirlingpdfuser -G stirlingpdfgroup && \
     chown -R stirlingpdfuser:stirlingpdfgroup $HOME /scripts /usr/share/fonts/opentype/noto /configs /customFiles /pipeline && \
     chown stirlingpdfuser:stirlingpdfgroup /app.jar && \
