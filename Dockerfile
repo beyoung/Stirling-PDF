@@ -1,5 +1,5 @@
 # Main stage
-FROM alpine:3.20.0
+FROM alpine:3.20.2
 
 # Copy necessary files
 COPY scripts /scripts
@@ -46,11 +46,10 @@ RUN echo "@testing https://mirrors.aliyun.com/alpine/edge/main" | tee -a /etc/ap
 # CV
         py3-opencv \
 # python3/pip
-        python3 && \
-    wget https://bootstrap.pypa.io/get-pip.py -qO - | python3 - --break-system-packages --no-cache-dir --upgrade
-
+        python3 \
+    py3-pip && \
 # uno unoconv and HTML
-RUN pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPrint -i https://mirrors.aliyun.com/pypi/simple && \
+    pip install --break-system-packages --no-cache-dir --upgrade unoconv WeasyPrint -i https://mirrors.aliyun.com/pypi/simple && \
     mv /usr/share/tessdata /usr/share/tessdata-original && \
     mkdir -p $HOME /configs /logs /customFiles /pipeline/watchedFolders /pipeline/finishedFolders && \
     fc-cache -f -v && \
