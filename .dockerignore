@@ -1,0 +1,10 @@
+local-gradle
+.git
+src
+.gradle
+images
+testing
+.github
+volumes
+logs
+.vscode

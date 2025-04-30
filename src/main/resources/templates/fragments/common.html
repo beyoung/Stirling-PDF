@@ -4,7 +4,7 @@
 
   <!-- Metadata -->
   <meta charset="utf-8">
-  <meta name="description" th:content="${@appName} + (${header} != null and ${header} != '' ? ' - ' + ${header} : '')">
+  <meta name="description" th:content="'Online PDF tools including PDF editor, merge, split, compress, convert PDF to Word, PDF to image, encrypt, decrypt, free PDF utilities, rotate pages, extract, converter, sign, watermark, reader, form filling, optimize, repair, and OCR. Fast, secure, and easy to use on pdf-tool.online.'">
   <meta name="msapplication-TileColor" content="#2d89ef">
   <meta name="theme-color" content="#ffffff">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,15 +34,17 @@
   <!-- Bootstrap -->
   <script th:src="@{'/js/thirdParty/popper.min.js'}"></script>
   <script th:src="@{'/js/thirdParty/bootstrap.min.js'}"></script>
-  
+
   <link rel="stylesheet" th:href="@{'/css/bootstrap.min.css'}">
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" th:href="@{'/css/bootstrap-icons.min.css'}">
 
   <!-- Pixel, doesn't collect any PII-->
-  <img referrerpolicy="no-referrer-when-downgrade" src="https://pixel.stirlingpdf.com/a.png?x-pxid=4f5fa02f-a065-4efb-bb2c-24509a4b6b92" style="position: absolute; visibility: hidden;"/>
-  
+  <img referrerpolicy="no-referrer-when-downgrade"
+    src="https://pixel.stirlingpdf.com/a.png?x-pxid=4f5fa02f-a065-4efb-bb2c-24509a4b6b92"
+    style="position: absolute; visibility: hidden;" />
+
   <!-- Custom -->
   <link rel="stylesheet" th:href="@{'/css/general.css'}">
   <link rel="stylesheet" th:href="@{'/css/theme/theme.css'}">
@@ -75,6 +77,28 @@
 
   <!-- Help Modal -->
   <link rel="stylesheet" th:href="@{'/css/errorBanner.css'}" th:if="${currentPage != 'home'}">
+  <link rel="stylesheet" href="css/errorBanner.css">
+  <script src="js/cacheFormInputs.js"></script>
+  <script src="js/tab-container.js"></script>
+  <script src="js/darkmode.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2XG41XTVP7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-2XG41XTVP7');
+  </script>
+
+  <!-- clarity -->
+  <script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "mdb5as00ky");
+  </script>
 
   <script th:src="@{'/js/cacheFormInputs.js'}" th:if="${currentPage != 'home'}"></script>
   <script th:src="@{'/js/tab-container.js'}"></script>
@@ -82,12 +106,12 @@
   <script th:src="@{'/js/csrf.js'}"></script>
   <script th:inline="javascript">
 
-    function UpdatePosthogConsent(){
-      if(typeof(posthog) == "undefined") {
+    function UpdatePosthogConsent() {
+      if (typeof (posthog) == "undefined") {
         return;
       }
 
-      window.CookieConsent.acceptedCategory('analytics')?
+      window.CookieConsent.acceptedCategory('analytics') ?
         posthog.opt_in_capturing() : posthog.opt_out_capturing();
     }
     const stirlingPDFLabel = /*[[${@StirlingPDFLabel}]]*/ '';
@@ -107,7 +131,7 @@
     const cookieBannerPreferencesModalServiceCounterLabel = /*[[#{cookieBanner.preferencesModal.serviceCounterLabel}]]*/ "";
     const cookieBannerPreferencesModalSubtitle = /*[[#{cookieBanner.preferencesModal.subtitle}]]*/ "";
     const cookieBannerPreferencesModalDescription1 = /*[[#{cookieBanner.preferencesModal.description.1}]]*/ "";
-    const cookieBannerPreferencesModalDescription2= /*[[#{cookieBanner.preferencesModal.description.2}]]*/ "";
+    const cookieBannerPreferencesModalDescription2 = /*[[#{cookieBanner.preferencesModal.description.2}]]*/ "";
     const cookieBannerPreferencesModalDescription3 = /*[[#{cookieBanner.preferencesModal.description.3}]]*/ "";
     const cookieBannerPreferencesModalNecessaryTitle1 = /*[[#{cookieBanner.preferencesModal.necessary.title.1}]]*/ "";
     const cookieBannerPreferencesModalNecessaryTitle2 = /*[[#{cookieBanner.preferencesModal.necessary.title.2}]]*/ "";
@@ -266,17 +290,13 @@
       loading: '[[#{loading}]]'
     };</script>
   <div class="custom-file-chooser mb-3"
-
     th:attr="data-bs-unique-id=${name}, data-bs-element-id=${name+'-input'}, data-bs-element-container-id=${name+'-input-container'}, data-bs-show-uploads=${showUploads}, data-bs-files-selected=#{filesSelected}, data-bs-pdf-prompt=#{pdfPrompt}, data-bs-no-file-selected=#{noFileSelected}">
     <div class="mb-3 d-flex flex-column justify-content-center align-items-center flex-wrap input-container"
       th:name="${name}+'-input'" th:id="${name}+'-input-container'" th:data-text="#{fileChooser.hoveredDragAndDrop}">
       <label class="file-input-btn d-none">
-       <input type="file" class="form-control" 
-		  th:name="${name}" 
-		  th:id="${name}+'-input'" 
-		  th:accept="${accept == null ? '*/*': ((accept == '*/*') ? accept : (accept + ',.zip'))}"
-		  th:attr="multiple=${!disableMultipleFiles}" 
-		  th:required="${notRequired} ? null : 'required'">
+        <input type="file" class="form-control" th:name="${name}" th:id="${name}+'-input'"
+          th:accept="${accept == null ? '*/*': ((accept == '*/*') ? accept : (accept + ',.zip'))}"
+          th:attr="multiple=${!disableMultipleFiles}" th:required="${notRequired} ? null : 'required'">
         Browse
       </label>
       <div class="d-flex flex-column align-items-center">
@@ -285,17 +305,18 @@
           <div th:text="#{fileChooser.or}" style="margin-right: 5px"></div>
           <div th:text="#{fileChooser.dragAndDrop}" id="dragAndDrop"></div>
         </div>
-        <hr th:if="${@GoogleDriveEnabled == true}" class="horizontal-divider" >
+        <hr th:if="${@GoogleDriveEnabled == true}" class="horizontal-divider">
       </div>
-      <div th:if="${@GoogleDriveEnabled == true}"  th:id="${name}+'-google-drive-button'" class="google-drive-button" th:attr="data-name=${name}, data-multiple=${!disableMultipleFiles}, data-accept=${accept}"  > 
+      <div th:if="${@GoogleDriveEnabled == true}" th:id="${name}+'-google-drive-button'" class="google-drive-button"
+        th:attr="data-name=${name}, data-multiple=${!disableMultipleFiles}, data-accept=${accept}">
         <img th:src="@{'/images/google-drive.svg'}" alt="google drive">
       </div>
     </div>
     <div class="selected-files flex-wrap"></div>
-	<div class="text-muted small mt-0 text-end w-100" th:if="${@uploadLimitService.getUploadLimit() != 0}">
-	    <span th:text="#{uploadLimit}">Maximum file size: </span>
-	    <span th:text="${@uploadLimitService.getReadableUploadLimit()}"></span>
-	</div>
+    <div class="text-muted small mt-0 text-end w-100" th:if="${@uploadLimitService.getUploadLimit() != 0}">
+      <span th:text="#{uploadLimit}">Maximum file size: </span>
+      <span th:text="${@uploadLimitService.getReadableUploadLimit()}"></span>
+    </div>
   </div>
   <div class="progressBarContainer" style="display: none; position: relative;">
     <div class="progress" style="height: 1rem;">
@@ -307,11 +328,11 @@
   </div>
   <script th:src="@{'/js/fileInput.js'}" type="module"></script>
 
-  <div th:if="${@GoogleDriveEnabled == true}" >
+  <div th:if="${@GoogleDriveEnabled == true}">
     <script type="text/javascript" th:src="@{'/js/googleFilePicker.js'}"></script>
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
-  
+
     <script th:inline="javascript">
       window.stirlingPDF.GoogleDriveClientId = /*[[${@GoogleDriveConfig.getClientId()}]]*/ null;
       window.stirlingPDF.GoogleDriveApiKey = /*[[${@GoogleDriveConfig.getApiKey()}]]*/ null;
